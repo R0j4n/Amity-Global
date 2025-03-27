@@ -4,6 +4,10 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Show notice popup immediately when page loads
+    const noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+    noticeModal.show();
+
     // Initialize all tooltips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -22,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Counter animation for statistics and show notice
+    // Counter animation for statistics
     const stats = document.querySelectorAll('.stat-number');
     if (stats.length > 0) {
         const animateStats = () => {
@@ -41,20 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         };
 
-        // Variable to track if notice has been shown
-        let noticeShown = false;
-
-        // Start animation and show notice when scrolled into view
+        // Start animation when scrolled into view
         const statsSection = document.querySelector('.stats-section');
         if (statsSection) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && !noticeShown) {
+                    if (entry.isIntersecting) {
                         animateStats();
-                        // Show notice popup when stats section is visible
-                        const noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
-                        noticeModal.show();
-                        noticeShown = true;
                     }
                 });
             }, { threshold: 0.5 });
